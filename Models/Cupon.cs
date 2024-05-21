@@ -21,7 +21,6 @@ namespace Backend.Models
         public enum Estado { Creado, Activo , Inactivo }
         public int? Tipo_Cupones_Id {get; set;}
         public int? Admin_Id {get; set;}
-
         public TipoCupon TipoCupon {get; set;}
         public Admin Admin {get; set;}
     }
