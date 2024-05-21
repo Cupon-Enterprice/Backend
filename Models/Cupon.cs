@@ -22,7 +22,7 @@ namespace Backend.Models
         public int? Tipo_Cupones_Id {get; set;}
         public int? Admin_Id {get; set;}
 
-        public TipoCupon TipoCupon {get; set;}
-        public Admin Admin {get; set;}
+        public TipoCupon? TipoCupon {get; set;}
+        public Admin? Admin {get; set;}
     }
 }
