@@ -11,13 +11,15 @@ namespace Backend.Controllers.Cupones
     public class CuponController
     {
         public readonly ICuponesRepository _cuponRepository;
-        public CuponController(ICuponesRepository cuponesRepository){
+        public CuponController(ICuponesRepository cuponesRepository)
+        {
             _cuponRepository = cuponesRepository;
         }
 
         [HttpGet]
         [Route("api/cupones")]
-        public IEnumerable<Cupon> ListarCupones(){
+        public IEnumerable<Cupon> ListarCupones()
+        {
             return _cuponRepository.ListarCupones();
         }
 
