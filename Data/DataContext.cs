@@ -15,5 +15,19 @@ namespace Backend.Data
         }
 
         public DbSet<Cupon> Cupones { get; set;}
+        public DbSet<Admin> Admins { get; set;}
+        public DbSet<TipoCupon> TipoCupones { get; set;}
+        public DbSet<Usuario> Usuarios { get; set;}
+        public DbSet<Redencion> Redenciones { get; set;}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cupon>()
+                .HasMany(e => e.Cupones)
+                .WithOne(e => e.TipoCupon)
+                .HasForeignKey(e => e.Tipo_Cupones_Id)
+                .HasPrincipalKey(e => e.Id);
+        }
+        
     }
 }
