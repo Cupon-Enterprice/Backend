@@ -27,7 +27,14 @@ namespace Backend.Data
                 .WithOne(e => e.TipoCupon)
                 .HasForeignKey(e => e.Tipo_Cupones_Id)
                 .HasPrincipalKey(e => e.Id);
+
+            modelBuilder.Entity<Admin>()
+                .HasMany(e => e.Cupones)
+                .WithOne(e => e.Admin)
+                .HasForeignKey(e => e.Admin_Id)
+                .HasPrincipalKey(e => e.Id);
         }
+        
         
     }
 }
