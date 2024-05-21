@@ -6,7 +6,7 @@ namespace Backend.Models
         public string? Correo { get; set; }
         public string? Contraseña {get; set; }
 
-        public ICollection<Cupon> Cupones { get; }
+        //public ICollection<Cupon> Cupones { get; }
     }
 
 }

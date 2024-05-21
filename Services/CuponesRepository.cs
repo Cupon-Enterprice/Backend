@@ -42,6 +42,7 @@ namespace Backend.Services
 
         public IEnumerable<Cupon> ListarCupones()
         {
+            
             return _context.Cupones.ToList();
         }
     }
