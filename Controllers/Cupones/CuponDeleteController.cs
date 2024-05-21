@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Cupones
 {
-    public class CuponDeleteController : ControllerBase
+   /* public class CuponDeleteController : ControllerBase
     {
         public readonly ICuponesRepository _cuponRepository;
         public CuponDeleteController(ICuponesRepository cuponesRepository)
@@ -16,12 +16,12 @@ namespace Backend.Controllers.Cupones
             _cuponRepository = cuponesRepository;
         }
 
-        [HttpDelete("{id}")]
-        [Route("api/cupones/{id}")]
-        public IActionResult EliminarCupon(int id)
+        [HttpDelete("{Id}")]
+        [Route("api/cupones/{Id}")]
+        public IActionResult EliminarCupon(int Id)
         {
-            _cuponRepository.EliminarCupon(id);
+            _cuponRepository.EliminarCupon(Id);
             return Ok();
         }
-    }
+    } */
 }

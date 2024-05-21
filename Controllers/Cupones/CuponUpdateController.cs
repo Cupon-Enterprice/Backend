@@ -16,12 +16,11 @@ namespace Backend.Controllers.Cupones
             _cuponRepository = cuponesRepository;
         }
 
-        // [HttpPut("{Id}")]
-        // [Route("api/cupones/{Id}")]
-        // public string ActualizarCupon(int Id , Cupon cupon)
-        // {
-        //     _cuponRepository.ActualizarCupon(Id, cupon);
-        //     return ;
-        // }
+       /* [HttpPut("{Id}")]
+        [Route("api/cupones/{Id}")]
+        public void ActualizarCupon(int Id , Cupon cupon)
+        {
+            _cuponRepository.ActualizarCupon(Id, cupon);
+        }*/
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Cupones
 {
-    public class CuponController
+    public class CuponController : ControllerBase
     {
         public readonly ICuponesRepository _cuponRepository;
         public CuponController(ICuponesRepository cuponesRepository)
@@ -24,7 +24,7 @@ namespace Backend.Controllers.Cupones
         }
 
         [HttpGet]
-        [Route("api/users/{Id}")]
+        [Route("api/cupones/{Id}")]
         public Cupon Details(int Id){
             return _cuponRepository.DetallesCupon(Id);
         }
