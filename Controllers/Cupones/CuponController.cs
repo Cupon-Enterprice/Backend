@@ -23,11 +23,10 @@ namespace Backend.Controllers.Cupones
             return _cuponRepository.ListarCupones();
         }
 
-        // [HttpGet("{id}")]
-        // [Route("api/cupones/{id}")]
-
-        // public Cupon DetallesCupon(int id){
-        //     return _cuponRepository.DetallesCupon(id);
-        // }
+        [HttpGet]
+        [Route("api/users/{Id}")]
+        public Cupon Details(int Id){
+            return _cuponRepository.DetallesCupon(Id);
+        }
     }
 }
