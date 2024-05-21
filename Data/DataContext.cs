@@ -22,7 +22,7 @@ namespace Backend.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Cupon>()
+            modelBuilder.Entity<TipoCupon>()
                 .HasMany(e => e.Cupones)
                 .WithOne(e => e.TipoCupon)
                 .HasForeignKey(e => e.Tipo_Cupones_Id)
