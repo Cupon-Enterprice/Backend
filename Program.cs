@@ -1,4 +1,5 @@
 using Backend.Data;
+using Backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnetion"),
 Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.20-mysql")));
 
+builder.Services.AddScoped<ICuponesRepository, CuponesRepository>();
 
 var app = builder.Build();
 
