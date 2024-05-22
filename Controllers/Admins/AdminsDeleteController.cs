@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Admins
 {
-    /* public class AdminsDeleteController : ControllerBase
+    public class AdminsDeleteController : ControllerBase
     {
         public readonly IAdminsRepository _adminsRepository;
         public AdminsDeleteController (IAdminsRepository adminsRepository)
@@ -16,12 +16,11 @@ namespace Backend.Controllers.Admins
             _adminsRepository = adminsRepository;
         }
 
-        [HttpDelete("{Id}")]
-        [Route("api/admins/{Id}")]
+        [HttpDelete("api/admins/{Id}")]
         public IActionResult EliminarAdmin(int Id)
         {
             _adminsRepository.EliminarAdmin(Id);
             return Ok();
         }
-    } */
+    }
 }

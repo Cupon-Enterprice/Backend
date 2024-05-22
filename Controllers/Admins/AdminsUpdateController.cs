@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Admins
 {
-    /* public class AdminsUpdateController : ControllerBase
+    public class AdminsUpdateController : ControllerBase
     {
         public readonly IAdminsRepository _adminsRepository;
         public AdminsUpdateController (IAdminsRepository adminsRepository)
@@ -16,11 +16,7 @@ namespace Backend.Controllers.Admins
             _adminsRepository = adminsRepository;
         }
 
-        [HttpDelete("{Id}")]
-        [Route("api/admins/{Id}")]
-        public void ActualizarAdmin(int Id, [FromBody] Admin admin)
-        {
-            _adminsRepository.ActualizarAdmin(Id, admin);
-        }
-    } */
+        [HttpPut("api/admins/{Id}")]
+        public void ActualizarAdmin(int Id, [FromBody] Admin admin) => _adminsRepository.ActualizarAdmin(Id, admin);
+    }
 }

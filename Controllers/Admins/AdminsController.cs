@@ -26,7 +26,7 @@ namespace Backend.Controllers.Admins
 
         [HttpGet]
         [Route("api/admins/{Id}")]
-        public Admin Dealles (int Id){
+        public Admin Detalles (int Id){
             return _adminRepository.DetallesAdmin(Id);
         }
     }
