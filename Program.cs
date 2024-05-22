@@ -16,6 +16,8 @@ options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnetion"),
 Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.20-mysql")));
 
 builder.Services.AddScoped<ICuponesRepository, CuponesRepository>();
+builder.Services.AddScoped<IAdminsRepository, AdminsRepository>();
+
 
 var app = builder.Build();
 
