@@ -16,11 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 //             _cuponRepository = cuponesRepository;
 //         }
 
-//         [HttpPut("{Id}")]
-//         [Route("api/cupones/{Id}")]
-//         public void ActualizarCupon(int Id ,[FromBody]  Cupon cupon)
-//         {
-//             _cuponRepository.ActualizarCupon(Id, cupon);
-//         }
-//     }
-// }
+        [HttpPut("api/cupon/{Id}")]
+        public void ActualizarCupon(int Id, [FromBody] Cupon cupon) => _cuponRepository.ActualizarCupon(Id, cupon);
+    }
+}

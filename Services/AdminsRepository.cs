@@ -14,6 +14,7 @@ namespace Backend.Services
 
         public void ActualizarAdmin(int Id, Admin admin)
         {
+            admin.Id = Id;
             _context.Admins.Update(admin);
             _context.SaveChanges();
         }

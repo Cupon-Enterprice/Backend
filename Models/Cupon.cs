@@ -18,7 +18,7 @@ namespace Backend.Models
         public double? ValorDescuento { get; set; }
         public int? LimiteUsos { get; set; }
         public int? Usos { get; set; }
-        public enum Estado { Creado, Activo , Inactivo }
+        public string? Estado { get; set; }
         public int? Tipo_Cupones_Id {get; set;}
         public int? Admin_Id {get; set;}
 
