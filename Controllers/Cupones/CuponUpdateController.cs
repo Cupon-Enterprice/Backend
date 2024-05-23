@@ -7,7 +7,7 @@ using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Cupones
-{
+{   
     public class CuponUpdateController : ControllerBase
     {
         public readonly ICuponesRepository _cuponRepository;
@@ -16,11 +16,11 @@ namespace Backend.Controllers.Cupones
             _cuponRepository = cuponesRepository;
         }
 
-        [HttpPut("{Id}")]
-        [Route("api/cupones/{Id}")]
-        public void ActualizarCupon(int Id ,[FromBody]  Cupon cupon)
+        [HttpPut("api/cupones/{Id}")]
+        public void ActualizarCupon(int Id ,Cupon cupon)
         {
-            _cuponRepository.ActualizarCupon(Id, cupon);
+
+            _cuponRepository.ActualizarCupon(Id, cupon);    
         }
     }
 }

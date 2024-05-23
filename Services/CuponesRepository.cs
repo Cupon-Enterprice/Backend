@@ -18,7 +18,9 @@ namespace Backend.Services
 
         public void ActualizarCupon(int Id, Cupon cupon)
         {
-            _context.Cupones.Update(cupon);
+            
+            _context.Cupones.Find(Id);
+            _context.Update(cupon);
             _context.SaveChanges();
         }
 
