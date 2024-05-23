@@ -33,6 +33,18 @@ namespace Backend.Data
                 .WithOne(e => e.Admin)
                 .HasForeignKey(e => e.Admin_Id)
                 .HasPrincipalKey(e => e.Id);
+                
+            modelBuilder.Entity<Cupon>()
+                .HasMany(e => e.redenciones)
+                .WithOne(e => e.Cupones)
+                .HasForeignKey(e => e.CuponesId)
+                .HasPrincipalKey(e => e.Id);
+            
+            modelBuilder.Entity<Usuario>()
+                .HasMany(e => e.redenciones)
+                .WithOne(e => e.Usuarios)
+                .HasForeignKey(e => e.UsuariosId)
+                .HasPrincipalKey(e => e.Id);
         }
         
         

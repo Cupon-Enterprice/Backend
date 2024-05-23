@@ -19,6 +19,10 @@ builder.Services.AddScoped<ICuponesRepository, CuponesRepository>();
 builder.Services.AddScoped<IAdminsRepository, AdminsRepository>();
 
 
+builder.Services.AddScoped<ICuponesRedencionRepository, CuponesRedencionRepository>();
+
+builder.Services.AddCors(options => 
+options.AddPolicy("politica", service =>{ service.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();}));
 var app = builder.Build();
 
 app.MapControllers();
@@ -51,6 +55,7 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+app.UseCors("politica");
 
 app.Run();
 
