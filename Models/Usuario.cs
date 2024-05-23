@@ -5,6 +5,6 @@ namespace Backend.Models
         public string? Nombre { get; set; }
         public string? Correo { get; set; }
         
-
+        public ICollection<Redencion>? redenciones { get; }
     }
 }

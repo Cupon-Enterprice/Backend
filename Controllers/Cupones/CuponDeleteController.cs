@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Models;
 using Backend.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Cupones
@@ -17,11 +17,10 @@ namespace Backend.Controllers.Cupones
         }
 
         [HttpDelete("api/cupones/{Id}")]
-        
         public IActionResult EliminarCupon(int Id)
         {
             _cuponRepository.EliminarCupon(Id);
             return Ok();
         }
-    } 
+    }
 }
