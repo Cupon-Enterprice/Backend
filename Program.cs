@@ -17,9 +17,8 @@ Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.20-mysql")));
 
 builder.Services.AddScoped<ICuponesRepository, CuponesRepository>();
 builder.Services.AddScoped<IAdminsRepository, AdminsRepository>();
-
-
 builder.Services.AddScoped<ICuponesRedencionRepository, CuponesRedencionRepository>();
+builder.Services.AddScoped<CuponService>();
 
 builder.Services.AddCors(options => 
 options.AddPolicy("politica", service =>{ service.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();}));
