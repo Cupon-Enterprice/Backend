@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Redenciones
 {
-public class RedencionController : ControllerBase
+    public class RedencionController : ControllerBase
     {
         public readonly ICuponesRedencionRepository _Redencion;
         public RedencionController(ICuponesRedencionRepository Redenciones)
@@ -18,7 +18,7 @@ public class RedencionController : ControllerBase
 
         [HttpPost]
         [Route("api/Redencion")]
-        public IActionResult CrearCupon(Redencion redencion)
+        public IActionResult CrearCupon([FromBody] Redencion redencion)
         {
             _Redencion.CrearRedencion(redencion);
             return Ok();
