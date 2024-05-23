@@ -24,5 +24,7 @@ namespace Backend.Models
 
         public TipoCupon? TipoCupon {get; set;}
         public Admin? Admin {get; set;}
+
+        public ICollection<Redencion>? redenciones { get; }
     }
 }

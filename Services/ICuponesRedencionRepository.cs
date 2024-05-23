@@ -9,5 +9,6 @@ namespace Backend.Services
     public interface ICuponesRedencionRepository
     {
         void CrearRedencion(Redencion redencion);
+        IEnumerable<Redencion> ListarRedenciones();
     }
 }

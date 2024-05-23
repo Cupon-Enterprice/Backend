@@ -15,10 +15,16 @@ namespace Backend.Services
             _context = context;
         }
 
-        public void CrearRedencion(Redencion x)
+        public void CrearRedencion(Redencion redencion)
         {
-            _context.Redenciones.Add(x);
+            _context.Redenciones.Add(redencion);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Redencion> ListarRedenciones()
+        {
+            
+            return _context.Redenciones.ToList();
         }
     }
 
