@@ -36,13 +36,13 @@ namespace Backend.Services
         public void EliminarCupon(int Id)
         {
             var eliminar = _context.Cupones.Find(Id);
-            _context.Cupones.Remove(eliminar);
+            eliminar.Estado = "Inactivo";
+            _context.Cupones.Update(eliminar);
             _context.SaveChanges();
         }
 
         public IEnumerable<Cupon> ListarCupones()
         {
-            
             return _context.Cupones.ToList();
         }
     }
