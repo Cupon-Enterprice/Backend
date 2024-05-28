@@ -19,8 +19,8 @@ namespace Backend.Models
         public int? LimiteUsos { get; set; }
         public int? Usos { get; set; }
         public string? Estado { get; set; }
-        public int? Tipo_Cupones_Id {get; set;}
-        public int? Admin_Id {get; set;}
+        public int? TipoCuponId {get; set;}
+        public int? AdminId {get; set;}
 
         public TipoCupon? TipoCupon {get; set;}
         public Admin? Admin {get; set;}

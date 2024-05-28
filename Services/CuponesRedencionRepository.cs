@@ -27,39 +27,39 @@ namespace Backend.Services
             return _context.Redenciones.ToList();
         }
 
-        public async Task<IEnumerable<Redencion>> ValidarCupon(ReedemRequest redencion)
+        public async Task<bool> ValidarCupon(ReedemRequest redencion)
         {
             try
             {
-                Console.WriteLine("aaaaaaaaaaaaaaa",redencion);
+                Console.WriteLine("aaaaaaaaaaaaaaa", redencion);
                 var usuario = await _context.Usuarios.FindAsync(redencion.UsuarioId);
                 if (usuario == null)
                 {
                     Console.WriteLine("Usuario no encontrado");
-                    return new List<Redencion>();
+                    return false;
                 }
 
                 var cupon = await _context.Cupones.FirstOrDefaultAsync(c => c.CodigoCupon == redencion.CodigoCupon);
                 if (cupon == null)
                 {
                     Console.WriteLine("Cupón no encontrado");
-                    return new List<Redencion>();
+                    return false;
                 }
 
-                if (cupon.Usos < cupon.LimiteUsos && cupon.FechaFinalizacion > DateTime.Now)
+                if (cupon.Usos < cupon.LimiteUsos && cupon.FechaFinalizacion <= DateTime.Now)
                 {
                     cupon.Usos += 1;
                     _context.Cupones.Update(cupon);
                     await _context.SaveChangesAsync();
-                    return await _context.Redenciones.ToListAsync();
+                    return true;
                 }
 
-                return new List<Redencion>();
+                return false;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"BBBBBBBBBBBBBBb {ex.Message}");
-                return new List<Redencion>();
+                return false;
             }
         }
 
