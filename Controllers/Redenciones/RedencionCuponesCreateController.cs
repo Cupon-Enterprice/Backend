@@ -8,19 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Redenciones
 {
-    public class RedencionController : ControllerBase
+    public class RedencionCuponesCreateController : ControllerBase
     {
         public readonly ICuponesRedencionRepository _Redencion;
-        public RedencionController(ICuponesRedencionRepository Redenciones)
+        public RedencionCuponesCreateController(ICuponesRedencionRepository Redenciones)
         {
             _Redencion = Redenciones;
         }
 
         [HttpPost]
-        [Route("api/Redencion")]
-        public IActionResult CrearCupon([FromBody] Redencion redencion)
+        [Route("api/ValidarCupon")]
+        public IActionResult ValidarCupon([FromBody] ReedemRequest redencion)
         {
-            _Redencion.CrearRedencion(redencion);
+            _Redencion.ValidarCupon(redencion.UsuariosId,redencion.CodigoCupon);
             return Ok();
         }
     }
