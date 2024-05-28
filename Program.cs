@@ -35,8 +35,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-<<<<<<< HEAD
-=======
 
 var summaries = new[]
 {
@@ -59,5 +57,4 @@ app.MapGet("/weatherforecast", () =>
 .WithOpenApi();
 app.UseCors("politica");
 
->>>>>>> 1ad5c01e4f73e89a948a6759e77fd1af4b0c6a16
 app.Run();
