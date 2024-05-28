@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Redenciones
 {
+    [ApiController]
     public class RedencionCuponesCreateController : ControllerBase
     {
         public readonly ICuponesRedencionRepository _Redencion;
@@ -16,11 +17,13 @@ namespace Backend.Controllers.Redenciones
             _Redencion = Redenciones;
         }
 
-        [HttpPost]
-        [Route("api/ValidarCupon")]
-        public IActionResult ValidarCupon([FromBody] ReedemRequest redencion)
+        [HttpPost("api/ValidarCupon")]
+        public async Task<IActionResult> ValidarCupon( ReedemRequest redencion)
         {
-            _Redencion.ValidarCupon(redencion.UsuariosId,redencion.CodigoCupon);
+            var response = await _Redencion.ValidarCupon(redencion);
+            if(!response){
+                return BadRequest();
+            }
             return Ok();
         }
     }
