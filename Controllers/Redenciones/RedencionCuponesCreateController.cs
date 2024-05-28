@@ -16,11 +16,11 @@ namespace Backend.Controllers.Redenciones
             _Redencion = Redenciones;
         }
 
-        [HttpPost]
-        [Route("api/ValidarCupon")]
-        public IActionResult ValidarCupon([FromBody] ReedemRequest redencion)
+        [HttpPost("api/ValidarCupon")]
+        public async Task<IActionResult> ValidarCupon( ReedemRequest redencion)
         {
-            _Redencion.ValidarCupon(redencion.UsuariosId,redencion.CodigoCupon);
+            Console.WriteLine("reuqest pa", redencion.UsuarioId);
+            await _Redencion.ValidarCupon(redencion);
             return Ok();
         }
     }
