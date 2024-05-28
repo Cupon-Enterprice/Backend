@@ -26,29 +26,42 @@ namespace Backend.Services
         {
             return _context.Redenciones.Include(e => e.Cupon).ToList();
         }
-        public async Task<IEnumerable<Redencion>> ValidarCupon(int UsuariosId, string codigoCupon)
+
+        public async Task<bool> ValidarCupon(ReedemRequest redencion)
         {
-            var usuario = await _context.Usuarios.FindAsync(UsuariosId);
-            Console.WriteLine("aaaaasdassa", usuario);
-            if (usuario.Id == UsuariosId)
+            try
             {
-                var cupon = await _context.Cupones.Where(c => c.CodigoCupon == codigoCupon).FirstOrDefaultAsync();
-                Console.WriteLine("aaaaaa", cupon);
-                if (cupon.Usos < cupon.LimiteUsos)
+                var usuario = await _context.Usuarios.FindAsync(redencion.UsuarioId);
+                if (usuario == null)
                 {
-                    Console.WriteLine("aaaaaa333", cupon);
-                    if (cupon.FechaFinalizacion <= DateTime.Now)
-                    {
-                        Console.WriteLine("aaaaaa44444444444", cupon);
-                        cupon.Usos = cupon.Usos + 1;
-                        _context.Cupones.Update(cupon);
-                        _context.SaveChanges();
-                        return _context.Redenciones.ToList();
-                    }
+                    Console.WriteLine("Usuario no encontrado");
+                    return false;
                 }
+
+                var cupon = await _context.Cupones.FirstOrDefaultAsync(c => c.CodigoCupon == redencion.CodigoCupon);
+                if (cupon == null)
+                {
+                    Console.WriteLine("Cupón no encontrado");
+                    return false;
+                }
+
+                if (cupon.Usos < cupon.LimiteUsos && cupon.FechaFinalizacion >= DateTime.Now)
+                {
+                    cupon.Usos += 1;
+                    _context.Cupones.Update(cupon);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+
+                return false;
             }
-            return _context.Redenciones;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error {ex.Message}");
+                return false;
+            }
         }
+
 
     }
 

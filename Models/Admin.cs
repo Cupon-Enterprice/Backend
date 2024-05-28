@@ -7,7 +7,6 @@ namespace Backend.Models
         public string? Nombre { get; set; }
         public string? Correo { get; set; }
         public string? Clave {get; set; }
-
         [JsonIgnore]
         public List<Cupon>? Cupones { get; }
     }
