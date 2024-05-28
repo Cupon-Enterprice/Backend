@@ -37,6 +37,8 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
     {
         ValidateAudience = true,
         ValidateIssuer = true,
+        ValidIssuer = "https://localhost:5025",
+        ValidAudience = "https://localhost:5025",
         IssuerSigningKey = siginKey,
     };
 });
@@ -44,6 +46,8 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+
+
 
 if (app.Environment.IsDevelopment())
 {
