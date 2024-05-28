@@ -23,6 +23,8 @@ namespace Backend.Controllers.Redenciones
             return _Redencion.ListarRedenciones();
         }
 
+        
+
 
         
     }

@@ -10,5 +10,7 @@ namespace Backend.Services
     {
         void CrearRedencion(Redencion redencion);
         IEnumerable<Redencion> ListarRedenciones();
+        Task<IEnumerable<Redencion>> ValidarCupon(int UsuariosId, string codigoCupon);
+        
     }
 }
