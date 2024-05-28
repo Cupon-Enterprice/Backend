@@ -35,8 +35,8 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
     opt.RequireHttpsMetadata = false;
     opt.TokenValidationParameters = new TokenValidationParameters()
     {
-        ValidateAudience = false,
-        ValidateIssuer = false,
+        ValidateAudience = true,
+        ValidateIssuer = true,
         IssuerSigningKey = siginKey,
     };
 });
