@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Backend.Models
@@ -25,6 +27,7 @@ namespace Backend.Models
         public TipoCupon? TipoCupon {get; set;}
         public Admin? Admin {get; set;}
 
-        public ICollection<Redencion>? redenciones { get; }
+        [JsonIgnore]
+        public List<Redencion>? redenciones { get; }
     }
 }

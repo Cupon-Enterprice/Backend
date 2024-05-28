@@ -5,7 +5,7 @@ namespace Backend.Models{
         public int? CuponId {get; set;}
         public int? UsuarioId {get; set;}
 
-        public Cupon Cupones {get;}
+        public Cupon? Cupon {get;set;}
         
     }
 }

@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Backend.Models
 {
     public class Usuario{
@@ -6,6 +8,7 @@ namespace Backend.Models
         public string? Correo { get; set; }
         public int? CuponesId { get; set; }
         
-        public ICollection<Redencion>? redenciones { get; }
+        [JsonIgnore]
+        public List<Redencion>? redenciones { get; }
     }
 }

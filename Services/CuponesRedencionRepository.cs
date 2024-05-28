@@ -24,7 +24,7 @@ namespace Backend.Services
 
         public IEnumerable<Redencion> ListarRedenciones()
         {
-            return _context.Redenciones.ToList();
+            return _context.Redenciones.Include(e => e.Cupon).ToList();
         }
 
         public async Task<bool> ValidarCupon(ReedemRequest redencion)
