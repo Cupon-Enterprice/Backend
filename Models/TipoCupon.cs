@@ -4,6 +4,6 @@ namespace Backend.Models
         public int Id { get; set; }
         public string? Tipo { get; set; }
 
-        public ICollection<Cupon>? Cupones {get;}
+        public List<Cupon>? Cupones {get;}
     }
 }
