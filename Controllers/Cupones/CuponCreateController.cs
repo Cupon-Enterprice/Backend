@@ -1,27 +1,33 @@
+// Controllers/CuponCreateController.cs
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Backend.Models;
 using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Cupones
 {
+    [ApiController]
+    [Route("api/cupones")]
     public class CuponCreateController : ControllerBase
     {
-        public readonly ICuponesRepository _cuponRepository;
-        public CuponCreateController(ICuponesRepository cuponesRepository)
+        private readonly ICuponesRepository _cuponRepository;
+        private readonly CuponService _cuponService;
+
+        public CuponCreateController(ICuponesRepository cuponesRepository, CuponService cuponService)
         {
             _cuponRepository = cuponesRepository;
+            _cuponService = cuponService;
         }
 
         [HttpPost]
-        [Route("api/cupones")]
-        public IActionResult CrearCupon(Cupon cupon)
+        public IActionResult CrearCupon([FromBody] Cupon cupon)
         {
+            
+            string codigoCupon = _cuponService.GenerateRandomCuponCode();
+            cupon.CodigoCupon = codigoCupon;
             _cuponRepository.CrearCupon(cupon);
-            return Ok();
+
+            return Ok(cupon);
         }
     }
 }
