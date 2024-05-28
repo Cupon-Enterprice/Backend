@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Backend.Models
 {
     public class Admin{
@@ -6,6 +8,7 @@ namespace Backend.Models
         public string? Correo { get; set; }
         public string? Clave {get; set; }
 
+        [JsonIgnore]
         public List<Cupon>? Cupones { get; }
     }
 

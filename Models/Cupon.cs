@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Backend.Models
@@ -20,11 +21,13 @@ namespace Backend.Models
         public int? LimiteUsos { get; set; }
         public int? Usos { get; set; }
         public string? Estado { get; set; }
-        public int? Tipo_Cupones_Id {get; set;}
-        public int? Admin_Id {get; set;}
+        public int? TipoCuponId {get; set;}
+        public int? AdminId {get; set;}
 
         public TipoCupon? TipoCupon {get; set;}
         public Admin? Admin {get; set;}
+
+        [JsonIgnore]
         public List<Redencion>? redenciones { get; }
     }
 }

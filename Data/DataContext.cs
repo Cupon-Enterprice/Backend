@@ -20,33 +20,7 @@ namespace Backend.Data
         public DbSet<Usuario> Usuarios { get; set;}
         public DbSet<Redencion> Redenciones { get; set;}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TipoCupon>()
-                .HasMany(e => e.Cupones)
-                .WithOne(e => e.TipoCupon)
-                .HasForeignKey(e => e.Tipo_Cupones_Id)
-                .HasPrincipalKey(e => e.Id);
-
-            modelBuilder.Entity<Admin>()
-                .HasMany(e => e.Cupones)
-                .WithOne(e => e.Admin)
-                .HasForeignKey(e => e.Admin_Id)
-                .HasPrincipalKey(e => e.Id);
-                
-            modelBuilder.Entity<Cupon>()
-                .HasMany(e => e.redenciones)
-                .WithOne(e => e.Cupones)
-                .HasForeignKey(e => e.CuponesId)
-                .HasPrincipalKey(e => e.Id);
-            
-            modelBuilder.Entity<Usuario>()
-                .HasMany(e => e.redenciones)
-                .WithOne(e => e.Usuarios)
-                .HasForeignKey(e => e.UsuariosId)
-                .HasPrincipalKey(e => e.Id);
-        }
-        
+      
         
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Backend.Data;
 using Backend.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services
 {
@@ -45,7 +46,7 @@ namespace Backend.Services
 
         public IEnumerable<Cupon> ListarCupones()
         {
-            return _context.Cupones.ToList();
+            return _context.Cupones.Include(u => u.Admin).Include(u => u.TipoCupon).ToList();
         }
     }
 }
