@@ -31,7 +31,6 @@ namespace Backend.Services
         {
             try
             {
-                Console.WriteLine("aaaaaaaaaaaaaaa", redencion);
                 var usuario = await _context.Usuarios.FindAsync(redencion.UsuarioId);
                 if (usuario == null)
                 {
@@ -46,7 +45,7 @@ namespace Backend.Services
                     return false;
                 }
 
-                if (cupon.Usos < cupon.LimiteUsos && cupon.FechaFinalizacion <= DateTime.Now)
+                if (cupon.Usos < cupon.LimiteUsos && cupon.FechaFinalizacion >= DateTime.Now)
                 {
                     cupon.Usos += 1;
                     _context.Cupones.Update(cupon);
@@ -58,7 +57,7 @@ namespace Backend.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"BBBBBBBBBBBBBBb {ex.Message}");
+                Console.WriteLine($"Error {ex.Message}");
                 return false;
             }
         }
