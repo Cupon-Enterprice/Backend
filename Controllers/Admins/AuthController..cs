@@ -8,6 +8,9 @@ using Backend.Models;
 using Backend.Services.Admins;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Backend.Dto;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers.Admins
 {
@@ -15,21 +18,22 @@ namespace Backend.Controllers.Admins
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly DataContext _context;
         private readonly IAuthService _authService;
         private readonly string _key;
-
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, DataContext context)
         {
             _authService = authService;
+            _context = context;
             _key = "a!D3f7kL8Mn2Pq4R6tVzX9wB1GhJkZ2Y";
         }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] Admin loginRequest)
+        [HttpPost("Auth")]
+        public async Task<IActionResult> Auth([FromBody] Autorize loginRequest)
         {
             var admin = await _authService.Authenticate(loginRequest.Correo, loginRequest.Clave);
+            var admin2 = await _context.Admins.FirstOrDefaultAsync(t => t.Correo == loginRequest.Correo && t.Clave == loginRequest.Clave);
 
-            if (admin == null)
+            if (admin2 == null)
             {
                 return Unauthorized("usuario invalido");
             }
@@ -40,10 +44,12 @@ namespace Backend.Controllers.Admins
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, admin.Nombre),
+                    new Claim(ClaimTypes.Name, admin2.Nombre),
                 }),
-                Expires = DateTime.UtcNow.AddMonths(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                Expires = DateTime.UtcNow.AddHours(8),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                Issuer = "https://localhost:5025",
+                Audience = "https://localhost:5025"
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
@@ -51,4 +57,3 @@ namespace Backend.Controllers.Admins
         }
     }
 }
-
