@@ -19,8 +19,15 @@ namespace Backend.Controllers.Admins
         [HttpDelete("api/admins/{Id}")]
         public IActionResult EliminarAdmin(int Id)
         {
-            _adminsRepository.EliminarAdmin(Id);
-            return Ok();
+            try
+            {
+                _adminsRepository.EliminarAdmin(Id);
+                return Ok("Se ha eliminado con exito");
+            }
+            catch (Exception Error)
+            {
+                return BadRequest("Error al eliminar" + Error.Message);
+            }
         }
     }
 }

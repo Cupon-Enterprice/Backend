@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Admins
 {
+    [ApiController]
+    [Route("api/admins")]
     public class AdminsCreateController : ControllerBase
     {
         public readonly IAdminsRepository _adminsRepository;
@@ -16,12 +18,18 @@ namespace Backend.Controllers.Admins
             _adminsRepository = adminsRepository;
         }
 
-        [HttpPost("api/admins/")]
+        [HttpPost]
         public IActionResult CrearAdmin([FromBody] Admin admin)
         {   
-            Console.WriteLine(admin.Nombre);
-            _adminsRepository.CrearAdmin(admin);
-            return Ok();
+            try
+            {
+                _adminsRepository.CrearAdmin(admin);
+                return Ok("Se ha creado con exito");
+            }
+            catch (Exception Error)
+            {
+                return BadRequest("Error al crear" + Error.Message);
+            }
         }
     }
 }
