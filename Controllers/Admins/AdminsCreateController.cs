@@ -18,7 +18,7 @@ namespace Backend.Controllers.Admins
 
         [HttpPost]
         [Route("api/admins/")]
-        public IActionResult CrearAdmin(Admin admin)
+        public IActionResult CrearAdmin([FromBody]Admin admin)
         {
             _adminsRepository.CrearAdmin(admin);
             return Ok();
