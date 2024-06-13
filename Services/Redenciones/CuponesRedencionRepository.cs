@@ -4,22 +4,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Backend.Data;
 using Backend.Models;
+using Backend.Services.Mailsender;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services.Redenciones
 {
     public class CuponesRedencionRepository : ICuponesRedencionRepository
     {
+        private readonly IMailSenderServices _mailSenderServices;
         public readonly DataContext _context;
-        public CuponesRedencionRepository(DataContext context)
+        public CuponesRedencionRepository(DataContext context, IMailSenderServices mailSenderServices)
         {
             _context = context;
+            _mailSenderServices = mailSenderServices;
         }
 
         public void CrearRedencion(Redencion redencion)
         {
-            _context.Redenciones.Add(redencion);
-            _context.SaveChanges();
+        
         }
 
         public IEnumerable<Redencion> ListarRedenciones()
@@ -50,10 +52,11 @@ namespace Backend.Services.Redenciones
                     cupon.Usos += 1;
                     _context.Cupones.Update(cupon);
                     await _context.SaveChangesAsync();
+                _mailSenderServices.SendMail(usuario.Correo, usuario.Nombre, cupon.Nombre);               
                     return true;
                 }
-
-                return false;
+                
+                 return false;
             }
             catch (Exception ex)
             {
