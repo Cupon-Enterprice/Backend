@@ -20,6 +20,7 @@ namespace Backend.Controllers.Redenciones
         [HttpPost("api/ValidarCupon")]
         public async Task<IActionResult> ValidarCupon( ReedemRequest redencion)
         {
+            Console.WriteLine('V');
             var response = await _Redencion.ValidarCupon(redencion);
             if(!response){
                 return BadRequest();

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Backend.Services.Mailsender;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -13,7 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-
 
 
 builder.Services.AddDbContext<DataContext>(options =>
@@ -25,6 +25,10 @@ builder.Services.AddScoped<IAdminsRepository, AdminsRepository>();
 builder.Services.AddScoped<ICuponesRedencionRepository, CuponesRedencionRepository>();
 builder.Services.AddScoped<CuponService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMailSenderServices, MailSenderServices>();
+
+
+builder.Services.AddHttpClient(); //Registra el servicio HttpClient en el contenedor de dependencias
 
 builder.Services.AddCors(options =>
     options.AddPolicy("politica", service => { service.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
