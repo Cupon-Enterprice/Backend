@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Models;
-using Backend.Services;
+using Backend.Services.Admins;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Admins
@@ -19,8 +19,15 @@ namespace Backend.Controllers.Admins
         [HttpDelete("api/admins/{Id}")]
         public IActionResult EliminarAdmin(int Id)
         {
-            _adminsRepository.EliminarAdmin(Id);
-            return Ok();
+            try
+            {
+                _adminsRepository.EliminarAdmin(Id);
+                return Ok("Se ha eliminado con exito");
+            }
+            catch (Exception Error)
+            {
+                return BadRequest("Error al eliminar" + Error.Message);
+            }
         }
     }
 }

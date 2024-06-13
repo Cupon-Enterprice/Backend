@@ -1,7 +1,7 @@
 // Controllers/CuponCreateController.cs
 using System;
 using Backend.Models;
-using Backend.Services;
+using Backend.Services.Cupones;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Cupones
@@ -22,12 +22,17 @@ namespace Backend.Controllers.Cupones
         [HttpPost]
         public IActionResult CrearCupon([FromBody] Cupon cupon)
         {
-            
-            string codigoCupon = _cuponService.GenerateRandomCuponCode();
-            cupon.CodigoCupon = codigoCupon;
-            _cuponRepository.CrearCupon(cupon);
-
-            return Ok(cupon);
+            try
+            {
+                string codigoCupon = _cuponService.GenerateRandomCuponCode();
+                cupon.CodigoCupon = codigoCupon;
+                _cuponRepository.CrearCupon(cupon);
+                return Ok("Se ha creado con exito");
+            }
+            catch (Exception Error)
+            {
+                return BadRequest("Error al crear" + Error.Message);
+            }
         }
     }
 }

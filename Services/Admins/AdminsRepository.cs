@@ -1,7 +1,7 @@
 using Backend.Data;
 using Backend.Models;
 
-namespace Backend.Services
+namespace Backend.Services.Admins
 {
     public class AdminsRepository : IAdminsRepository
     {

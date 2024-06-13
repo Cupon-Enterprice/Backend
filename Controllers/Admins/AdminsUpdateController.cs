@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Models;
-using Backend.Services;
+using Backend.Services.Admins;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Admins
@@ -17,6 +17,17 @@ namespace Backend.Controllers.Admins
         }
 
         [HttpPut("api/admins/{Id}")]
-        public void ActualizarAdmin(int Id, [FromBody] Admin admin) => _adminsRepository.ActualizarAdmin(Id, admin);
+        public IActionResult ActualizarAdmin(int Id, [FromBody] Admin admin)
+        {
+            try
+            {
+                _adminsRepository.ActualizarAdmin(Id, admin);
+                return Ok("Se ha actualizado con exito");
+            }
+            catch (Exception Error)
+            {
+                return BadRequest("Error al actualizar" + Error.Message);
+            }
+        } 
     }
 }

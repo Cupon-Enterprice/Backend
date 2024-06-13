@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Models;
-using Backend.Services;
+using Backend.Services.Redenciones;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Redenciones
