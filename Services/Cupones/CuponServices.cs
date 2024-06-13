@@ -1,6 +1,6 @@
 using System;
 
-namespace Backend.Services
+namespace Backend.Services.Cupones
 {
     public class CuponService
     {

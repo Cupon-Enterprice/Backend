@@ -7,7 +7,7 @@ using Backend.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Services
+namespace Backend.Services.Cupones
 {
     public class CuponesRepository : ICuponesRepository
     {

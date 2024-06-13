@@ -6,7 +6,7 @@ using Backend.Data;
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Services
+namespace Backend.Services.Redenciones
 {
     public class CuponesRedencionRepository : ICuponesRedencionRepository
     {
