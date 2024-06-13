@@ -17,7 +17,7 @@ namespace Backend.Controllers.Redenciones
             _Redencion = Redenciones;
         }
 
-        [HttpPost("api/ValidarCupon")]
+        [HttpPost("api/validarCupon")]
         public async Task<IActionResult> ValidarCupon( ReedemRequest redencion)
         {
             Console.WriteLine('V');

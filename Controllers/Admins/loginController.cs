@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-[Route("api/Login")]
+[Route("api/login")]
 [ApiController]
 public class LoginController : ControllerBase
 {
