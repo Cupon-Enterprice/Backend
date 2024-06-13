@@ -27,7 +27,7 @@ namespace Backend.Controllers.Admins
             _context = context;
             _key = "a!D3f7kL8Mn2Pq4R6tVzX9wB1GhJkZ2Y";
         }
-        [HttpPost("Auth")]
+        [HttpPost]
         public async Task<IActionResult> Auth([FromBody] Autorize loginRequest)
         {
             var admin = await _authService.Authenticate(loginRequest.Correo, loginRequest.Clave);

@@ -19,6 +19,11 @@ namespace Backend.Controllers.Admins
         [HttpDelete("api/admins/{Id}")]
         public IActionResult EliminarAdmin(int Id)
         {
+            
+        var admin = _adminsRepository.DetallesAdmin(Id);
+        if(admin == null){
+            return NotFound($"no se ha encontrado usuario con el Id {Id}");
+        }
             try
             {
                 _adminsRepository.EliminarAdmin(Id);

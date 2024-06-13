@@ -26,8 +26,24 @@ namespace Backend.Controllers.Admins
 
         [HttpGet]
         [Route("api/admins/{Id}")]
-        public Admin Detalles (int Id){
-            return _adminRepository.DetallesAdmin(Id);
+        public IActionResult Detalles(int Id)
+        {
+            try
+            {
+                var admin = _adminRepository.DetallesAdmin(Id);
+                if (admin == null)
+                {
+                    return NotFound(new { message = $"No se encuentra el admin con el id {Id}" });
+                }
+                return Ok(admin);
+            }
+            catch (Exception ex)
+            {
+                
+
+                return BadRequest("Error al crear" + ex.Message);
+            }
         }
-    }
+
+            }
 }
