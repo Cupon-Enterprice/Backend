@@ -8,9 +8,9 @@ namespace Backend.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Nombre is required")]
         public string Nombre { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Correo is required")]
         public string Correo { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Clave is required")]
         public string Clave {get; set; }
         [JsonIgnore]
         public List<Cupon>? Cupones { get; }
