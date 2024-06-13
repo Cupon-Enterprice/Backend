@@ -1,7 +1,7 @@
 // Controllers/CuponCreateController.cs
 using System;
 using Backend.Models;
-using Backend.Services;
+using Backend.Services.Cupones;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Cupones

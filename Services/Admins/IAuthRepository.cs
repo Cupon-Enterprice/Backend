@@ -3,7 +3,7 @@ using Backend.Models;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Services
+namespace Backend.Services.Admins
 {
     public interface IAuthService
     {

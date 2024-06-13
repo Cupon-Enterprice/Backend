@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Backend.Models;
 
-namespace Backend.Services
+namespace Backend.Services.Admins
 {
     public interface IAdminsRepository
     {
