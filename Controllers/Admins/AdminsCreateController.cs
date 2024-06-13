@@ -20,12 +20,13 @@ namespace Backend.Controllers.Admins
 
         [HttpPost]
         public IActionResult CrearAdmin([FromBody] Admin admin)
-        {   
-            var adminsss = _adminsRepository.ListarAdmin();
-            var existe = adminsss.Where(x => x.Correo == admin.Correo).FirstOrDefault();
-            if (existe!= null)
+        {  
+            var admins = _adminsRepository.ListarAdmin();
+            var existe = admins.FirstOrDefault(x => x.Correo == admin.Correo);
+
+            if (existe != null)
             {
-                return BadRequest($"El correo {admin.Correo} ya existe intentelo con otro");
+                return BadRequest(new { message = $"El correo {admin.Correo} ya existe. Inténtelo con otro." });
             }
 
             try
