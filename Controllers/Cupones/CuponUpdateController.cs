@@ -17,6 +17,17 @@ namespace Backend.Controllers.Cupones
         }
 
         [HttpPut("api/cupon/{Id}")]
-        public void ActualizarCupon(int Id, [FromBody] Cupon cupon) => _cuponRepository.ActualizarCupon(Id, cupon);
+        public IActionResult ActualizarCupon(int Id, [FromBody] Cupon cupon)
+        {
+            try
+            {
+                _cuponRepository.ActualizarCupon(Id, cupon);
+                return Ok("Se ha actualizado con exito");
+            }
+            catch (Exception Error)
+            {
+                return BadRequest("Error al actualizar" + Error.Message);
+            }
+        }
     }
 }
