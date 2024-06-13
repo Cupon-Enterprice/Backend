@@ -22,6 +22,9 @@ namespace Backend.Controllers.Cupones
         [HttpPost]
         public IActionResult CrearCupon([FromBody] Cupon cupon)
         {
+            if(cupon.AdminId == null){
+                return BadRequest("el id del admin no puede ser nullo");
+            }
             try
             {
                 string codigoCupon = _cuponService.GenerateRandomCuponCode();

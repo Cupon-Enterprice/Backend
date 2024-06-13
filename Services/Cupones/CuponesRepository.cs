@@ -33,7 +33,7 @@ namespace Backend.Services.Cupones
 
         public Cupon DetallesCupon(int Id)
         {
-            return _context.Cupones.Find(Id);
+            return _context.Cupones.Include(u => u.Admin).Include(u => u.TipoCupon).FirstOrDefault(u => u.Id == Id);
         }
 
         public void EliminarCupon(int Id)
