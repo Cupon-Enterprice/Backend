@@ -16,7 +16,7 @@ namespace Backend.Controllers.Cupones
             _cuponRepository = cuponesRepository;
         }
 
-        [HttpPut("api/cupon/{Id}")]
+        [HttpPut("api/cupones/{Id}")]
         public IActionResult ActualizarCupon(int Id, [FromBody] Cupon cupon)
         {
             try
