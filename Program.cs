@@ -1,44 +1,70 @@
-var builder = WebApplication.CreateBuilder(args);
+using Backend.Data;
+using Backend.Services.Admins;
+using Backend.Services.Cupones;
+using Backend.Services.Redenciones;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Backend.Services.Mailsender;
 
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnetion"),
+    Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.20-mysql")));
+
+builder.Services.AddScoped<ICuponesRepository, CuponesRepository>();
+builder.Services.AddScoped<IAdminsRepository, AdminsRepository>();
+builder.Services.AddScoped<ICuponesRedencionRepository, CuponesRedencionRepository>();
+builder.Services.AddScoped<CuponService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMailSenderServices, MailSenderServices>();
+
+
+builder.Services.AddHttpClient(); //Registra el servicio HttpClient en el contenedor de dependencias
+
+builder.Services.AddCors(options =>
+    options.AddPolicy("politica", service => { service.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
+
+string key = "a!D3f7kL8Mn2Pq4R6tVzX9wB1GhJkZ2Y";
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
+{
+    var siginKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+    opt.RequireHttpsMetadata = false;
+    opt.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateAudience = true,
+        ValidateIssuer = true,
+        ValidIssuer = "https://localhost:5025",
+        ValidAudience = "https://localhost:5025",
+        IssuerSigningKey = siginKey,
+    };
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseHttpsRedirection();
+
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.UseCors("politica");
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
