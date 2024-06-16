@@ -34,7 +34,7 @@ namespace Backend.Controllers.Cupones
             }
             catch (Exception Error)
             {
-                return BadRequest(new { message = "Error al crear" + Error.Message});
+                return StatusCode(500, new { message = "Error al crear: " + Error.Message });
             }
         }
     }

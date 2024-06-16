@@ -19,11 +19,30 @@ namespace Backend.Services.Cupones
 
         public void ActualizarCupon(int Id, Cupon cupon)
         {
-            
-            _context.Cupones.Find(Id);
-            _context.Update(cupon);
+        var cuponExistente = _context.Cupones.Find(Id);
+        if (cuponExistente != null)
+        {
+            cuponExistente.CodigoCupon = cupon.CodigoCupon;
+            cuponExistente.Nombre = cupon.Nombre;
+            cuponExistente.Descripcion = cupon.Descripcion;
+            cuponExistente.FechaCreacion = cupon.FechaCreacion;
+            cuponExistente.FechaActualizacion = cupon.FechaActualizacion;
+            cuponExistente.FechaInicio = cupon.FechaInicio;
+            cuponExistente.FechaFinalizacion = cupon.FechaFinalizacion;
+            cuponExistente.ValorDescuento = cupon.ValorDescuento;
+            cuponExistente.LimiteUsos = cupon.LimiteUsos;
+            cuponExistente.Usos = cupon.Usos;
+            cuponExistente.Estado = cupon.Estado;
+            cuponExistente.TipoCuponId = cupon.TipoCuponId;
+            cuponExistente.AdminId = cupon.AdminId;
+
             _context.SaveChanges();
         }
+        else
+        {
+            throw new Exception("El cupon con el ID especificado no fue encontrado.");
+        }
+    }
 
         public void CrearCupon(Cupon cupon)
         {

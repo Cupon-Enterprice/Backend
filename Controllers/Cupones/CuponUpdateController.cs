@@ -22,11 +22,11 @@ namespace Backend.Controllers.Cupones
             try
             {
                 _cuponRepository.ActualizarCupon(Id, cupon);
-                return Ok("Se ha actualizado con exito");
+                return Ok(new { message = "Se ha actualizado con exito"});
             }
             catch (Exception Error)
             {
-                return BadRequest("Error al actualizar" + Error.Message);
+                return BadRequest(new { mesagge= "Error al actualizar" + Error.Message});
             }
         }
     }
