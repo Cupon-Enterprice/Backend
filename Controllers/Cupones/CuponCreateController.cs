@@ -23,18 +23,18 @@ namespace Backend.Controllers.Cupones
         public IActionResult CrearCupon([FromBody] Cupon cupon)
         {
             if(cupon.AdminId == null){
-                return BadRequest("el id del admin no puede ser nullo");
+                return BadRequest(new { message = $"El {cupon.AdminId} para el admin no fue encontrado " });
             }
             try
             {
                 string codigoCupon = _cuponService.GenerateRandomCuponCode();
                 cupon.CodigoCupon = codigoCupon;
                 _cuponRepository.CrearCupon(cupon);
-                return Ok("Se ha creado con exito");
+                return Ok(new {message = $"se ha creado con exito"});
             }
             catch (Exception Error)
             {
-                return BadRequest("Error al crear" + Error.Message);
+                return StatusCode(500, new { message = "Error al crear: " + Error.Message });
             }
         }
     }

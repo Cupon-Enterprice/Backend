@@ -10,19 +10,32 @@ namespace Backend.Models
     public class Cupon
     {
         public int Id { get; set; }
+        
         public string? CodigoCupon { get; set; }
-        public string? Nombre { get; set; }
-        public string? Descripcion { get; set; }
-        public DateTime? FechaCreacion { get; set; }
-        public DateTime? FechaActualizacion { get; set; }
-        public DateTime? FechaInicio { get; set; }
-        public DateTime? FechaFinalizacion { get; set; }
+        [Required]
+        public string Nombre { get; set; }
+        [Required]
+        public string Descripcion { get; set; }
+        [Required]
+        public DateTime FechaCreacion { get; set; }
+        [Required]
+        public DateTime FechaActualizacion { get; set; }
+        [Required]
+        public DateTime FechaInicio { get; set; }
+        [Required]
+        public DateTime FechaFinalizacion { get; set; }
+        [Required]
         public double? ValorDescuento { get; set; }
-        public int? LimiteUsos { get; set; }
-        public int? Usos { get; set; }
-        public string? Estado { get; set; }
-        public int? TipoCuponId {get; set;}
-        public int? AdminId {get; set;}
+        [Required]
+        public int LimiteUsos { get; set; }
+        [Required]
+        public int Usos { get; set; }
+        [Required]
+        public string Estado { get; set; }
+        [Required]
+        public int TipoCuponId {get; set;}
+        [Required]
+        public int AdminId {get; set;}
 
         public TipoCupon? TipoCupon {get; set;}
         public Admin? Admin {get; set;}
