@@ -19,14 +19,18 @@ namespace Backend.Controllers.Cupones
         [HttpDelete("api/cupones/{Id}")]
         public IActionResult EliminarCupon(int Id)
         {
+        var cupon = _cuponRepository.DetallesCupon(Id);
+        if(cupon == null){
+            return NotFound(new { message = $"no se ha encontrado cupon  con el Id {Id}" });
+        }
             try
             {
                 _cuponRepository.EliminarCupon(Id);
-                return Ok("Se ha eliminado con exito");
+                return Ok(new { message = "Se ha eliminado con exito"});
             }
             catch (Exception Error)
             {
-                return BadRequest("Error al eliminar" + Error.Message);
+                return BadRequest(new { message = "Error al eliminar" + Error.Message});
             }
         }
     }

@@ -25,8 +25,23 @@ namespace Backend.Controllers.Cupones
 
         [HttpGet]
         [Route("api/cupones/{Id}")]
-        public Cupon Details(int Id){
-            return _cuponRepository.DetallesCupon(Id);
+        public IActionResult DetallesCupon( int Id)
+        {
+            try
+            {
+                var cupon = _cuponRepository.DetallesCupon(Id);
+                if (cupon == null)
+                {
+                    return NotFound(new { message = $"No se encuentra el cupon  con el id {Id}" });
+                }
+                return Ok(cupon);
+            }
+            catch (Exception ex)
+            {
+
+
+                return BadRequest("Error al crear" + ex.Message);
+            }
         }
     }
 }
