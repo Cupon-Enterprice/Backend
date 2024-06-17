@@ -6,6 +6,7 @@ namespace Backend.Models{
         public int? UsuarioId {get; set;}
 
         public Cupon? Cupon {get;set;}
+        public Usuario? Usuario{get; set;}
         
     }
 }
