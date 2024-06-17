@@ -67,5 +67,13 @@ namespace Backend.Services.Cupones
         {
             return _context.Cupones.Include(u => u.Admin).Include(u => u.TipoCupon).ToList();
         }
+
+        public void ActivarCupon(int Id){
+            var activar = _context.Cupones.Find(Id);
+            activar.Estado = "Activo";
+            _context.Cupones.Update(activar);
+            _context.SaveChanges();
+
+        }
     }
 }
