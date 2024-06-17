@@ -64,8 +64,6 @@ namespace Backend.Services.Redenciones
                 return false;
             }
         }
-
-
     }
 
 }
