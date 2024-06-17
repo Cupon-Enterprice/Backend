@@ -13,5 +13,6 @@ namespace Backend.Services.Cupones
         void CrearCupon(Cupon cupon);
         void EliminarCupon(int Id);
         void ActualizarCupon(int Id,Cupon cupon);
+        void ActivarCupon(int Id);
     }
 }

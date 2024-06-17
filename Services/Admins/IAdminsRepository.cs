@@ -13,5 +13,7 @@ namespace Backend.Services.Admins
         void CrearAdmin(Admin admin);
         void EliminarAdmin(int Id);
         void ActualizarAdmin(int Id,Admin admin);
+        void ActivarAdmin(int Id);
     }
+
 }
