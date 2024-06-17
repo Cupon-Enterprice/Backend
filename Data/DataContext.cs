@@ -19,7 +19,8 @@ namespace Backend.Data
         public DbSet<TipoCupon> TipoCupones { get; set;}
         public DbSet<Usuario> Usuarios { get; set;}
         public DbSet<Redencion> Redenciones { get; set;}
-        public DbSet<Purchase> Purchases { get; set;}
+        public DbSet<Compra> Compras { get; set;}
+        public DbSet<CompraCupon>ComprasCupones { get; set;}
         
     }
 }
