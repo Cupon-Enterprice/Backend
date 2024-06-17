@@ -24,7 +24,7 @@ namespace Backend.Services.Mailsender
                 {
                     from = new
                     {
-                        email = "MS_PmYp6t@trial-0p7kx4x8r12g9yjr.mlsender.net"
+                        email = "MS_A1Y4a7@trial-neqvygme3y540p7w.mlsender.net"
                     },
                     to = new[]
                     {
@@ -54,7 +54,7 @@ namespace Backend.Services.Mailsender
                     Content = new StringContent(body, Encoding.UTF8, "application/json")
                 };
 
-                request.Headers.Add("Authorization", $"Bearer mlsn.9a2354296918d178648519363440bccb6d9be99c6a8ea0b913bbd1de93a680ad");
+                request.Headers.Add("Authorization", $"Bearer mlsn.181f31fe1c968dcfbf1b53ce865c8e4465368ec974a78a03ee0561d02b868912");
                 HttpResponseMessage response = _httpClient.Send(request);
                 Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 Console.WriteLine(response);
