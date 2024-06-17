@@ -52,7 +52,7 @@ namespace Backend.Services.Redenciones
                     cupon.Usos += 1;
                     _context.Cupones.Update(cupon);
                     await _context.SaveChangesAsync();
-                _mailSenderServices.SendMail(usuario.Correo, usuario.Nombre, cupon.Nombre);               
+                    _mailSenderServices.SendMail(usuario.Correo, usuario.Nombre, cupon.Nombre);               
                     return true;
                 }
                 
