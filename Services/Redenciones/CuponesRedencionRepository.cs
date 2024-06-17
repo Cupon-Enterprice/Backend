@@ -26,7 +26,7 @@ namespace Backend.Services.Redenciones
 
         public IEnumerable<Redencion> ListarRedenciones()
         {
-            return _context.Redenciones.Include(e => e.Cupon).ToList();
+            return _context.Redenciones.Include(e => e.Cupon).Include(u => u.Usuario).ToList();
         }
 
         public async Task<bool> ValidarCupon(ReedemRequest redencion)
@@ -56,7 +56,7 @@ namespace Backend.Services.Redenciones
                     return true;
                 }
                 
-                 return false;
+                return false;
             }
             catch (Exception ex)
             {
