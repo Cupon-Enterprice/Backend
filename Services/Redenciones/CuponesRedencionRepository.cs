@@ -19,9 +19,9 @@ namespace Backend.Services.Redenciones
             _mailSenderServices = mailSenderServices;
         }
 
-        public void CrearRedencion(Redencion redencion)
+        public async Task<Cupon> GetCuponByCodigo(string codigoCupon)
         {
-        
+            return await _context.Cupones.FirstOrDefaultAsync(c => c.CodigoCupon == codigoCupon);
         }
 
         public IEnumerable<Redencion> ListarRedenciones()
@@ -29,18 +29,20 @@ namespace Backend.Services.Redenciones
             return _context.Redenciones.Include(e => e.Cupon).Include(u => u.Usuario).ToList();
         }
 
-        public async Task<bool> ValidarCupon(ReedemRequest redencion)
+        public async Task<bool> ValidarCupon(ReedemRequest redencionRequest, Redencion redencion)
         {
             try
             {
-                var usuario = await _context.Usuarios.FindAsync(redencion.UsuarioId);
+                
+
+                var usuario = await _context.Usuarios.FindAsync(redencionRequest.UsuarioId);
                 if (usuario == null)
                 {
                     Console.WriteLine("Usuario no encontrado");
                     return false;
                 }
 
-                var cupon = await _context.Cupones.FirstOrDefaultAsync(c => c.CodigoCupon == redencion.CodigoCupon);
+                var cupon = await GetCuponByCodigo(redencionRequest.CodigoCupon);
                 if (cupon == null)
                 {
                     Console.WriteLine("Cupón no encontrado");
@@ -49,13 +51,18 @@ namespace Backend.Services.Redenciones
 
                 if (cupon.Usos < cupon.LimiteUsos && cupon.FechaFinalizacion >= DateTime.Now)
                 {
+                    _context.Redenciones.Add(redencion);
+                    await _context.SaveChangesAsync();
                     cupon.Usos += 1;
                     _context.Cupones.Update(cupon);
                     await _context.SaveChangesAsync();
-                    _mailSenderServices.SendMail(usuario.Correo, usuario.Nombre, cupon.Nombre);               
+
+                    _mailSenderServices.SendMail(usuario.Correo, usuario.Nombre, cupon.Nombre);
+                    Console.WriteLine("Cupón validado y redención creada");
                     return true;
                 }
-                
+
+                Console.WriteLine("El cupón ha alcanzado su límite de usos o está expirado");
                 return false;
             }
             catch (Exception ex)
@@ -65,7 +72,5 @@ namespace Backend.Services.Redenciones
             }
         }
 
-
     }
-
 }
