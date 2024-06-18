@@ -8,9 +8,12 @@ namespace Backend.Services.Redenciones
 {
     public interface ICuponesRedencionRepository
     {
-        void CrearRedencion(Redencion redencion);
+        
         IEnumerable<Redencion> ListarRedenciones();
-        Task<bool> ValidarCupon(ReedemRequest redencion);
+        Task<bool> ValidarCupon(ReedemRequest redencionRequest, Redencion redencion);
+        Task<Cupon> GetCuponByCodigo(string codigoCupon);
+
+        
         
     }
 }
