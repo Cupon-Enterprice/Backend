@@ -4,29 +4,41 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Backend.Services.Slack;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
-public class SlackNotificationService : ISlackNotificationService
+public interface ISlackService
 {
-public readonly string _webhookUrl;
-
-
-public SlackNotificationService(IConfiguration configuration)
-{
-    _webhookUrl = configuration["Slack:WebhookUrl"];
+    Task SendMessageAsync(string message);
 }
 
-public async Task SendNotificationAsync(string message)
+public class SlackService : ISlackService
 {
-    var slackMessage = new SlackMessage { Text = message };
-    var json = JsonSerializer.Serialize(slackMessage);
-    var content = new StringContent(json, Encoding.UTF8, "application/json");
+    private readonly HttpClient _httpClient;
+    private readonly string _webhookUrl;
 
-    using var httpClient = new HttpClient();
-    await httpClient.PostAsync(_webhookUrl, content);
-}
-}
+    public SlackService(HttpClient httpClient, IConfiguration configuration)
+    {
+        _httpClient = httpClient;
+        _webhookUrl = configuration["Slack:WebhookUrl"];
+        Console.WriteLine($"Webhook URL: {_webhookUrl}");
+    }
 
-public class SlackMessage
-{
-public string Text { get; set; }
+    public async Task SendMessageAsync(string message)
+    {
+        var payload = new
+        {
+            text = message
+        };
+
+        var jsonPayload = JsonSerializer.Serialize(payload);
+        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PostAsync(_webhookUrl, content);
+        response.EnsureSuccessStatusCode();
+    }
 }
