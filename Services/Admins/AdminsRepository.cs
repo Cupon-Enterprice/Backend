@@ -20,7 +20,7 @@ namespace Backend.Services.Admins
         }
 
         public void CrearAdmin(Admin admin)
-        {
+        {   admin.Estado = "Activo";
             _context.Admins.Add(admin);
             _context.SaveChanges();
         }
