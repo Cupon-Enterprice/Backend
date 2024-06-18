@@ -7,14 +7,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Backend.Services.Mailsender;
+using Backend.Services.Slack;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Backend.Services.Midleware;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Add services to the container
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
+builder.Configuration.AddJsonFile("appsettings.json");
 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnetion"),
@@ -27,8 +32,10 @@ builder.Services.AddScoped<CuponService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMailSenderServices, MailSenderServices>();
 
+// Registrar ISlackNotificationService como Transient
+builder.Services.AddTransient<ISlackNotificationService, SlackNotificationService>();
 
-builder.Services.AddHttpClient(); //Registra el servicio HttpClient en el contenedor de dependencias
+builder.Services.AddHttpClient(); // Registra el servicio HttpClient en el contenedor de dependencias
 
 builder.Services.AddCors(options =>
     options.AddPolicy("politica", service => { service.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
@@ -37,7 +44,7 @@ string key = "a!D3f7kL8Mn2Pq4R6tVzX9wB1GhJkZ2Y";
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
 {
-    var siginKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+    var signInKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
     opt.RequireHttpsMetadata = false;
     opt.TokenValidationParameters = new TokenValidationParameters()
     {
@@ -45,21 +52,30 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
         ValidateIssuer = true,
         ValidIssuer = "https://localhost:5025",
         ValidAudience = "https://localhost:5025",
-        IssuerSigningKey = siginKey,
+        IssuerSigningKey = signInKey,
     };
 });
 
 var app = builder.Build();
 
+// Ejemplo de uso de ISlackNotificationService
+using (var scope = app.Services.CreateScope())
+{
+    var slackService = scope.ServiceProvider.GetRequiredService<ISlackNotificationService>();
+    // Utiliza slackService para enviar notificaciones
+    // Por ejemplo: slackService.SendNotification("Mensaje de prueba");
+}
+
 app.UseHttpsRedirection();
-
-
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Agregar el middleware de manejo de excepciones personalizado
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("politica");
 app.UseRouting();
