@@ -10,7 +10,7 @@ using Backend.Services.Mailsender;
 using Backend.Services.Slack;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
-using Backend.Services.Midleware;
+//using Backend.Services.Midleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,9 +31,10 @@ builder.Services.AddScoped<ICuponesRedencionRepository, CuponesRedencionReposito
 builder.Services.AddScoped<CuponService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMailSenderServices, MailSenderServices>();
+builder.Services.AddSingleton<ISlackService, SlackService>();
 
 // Registrar ISlackNotificationService como Transient
-builder.Services.AddTransient<ISlackNotificationService, SlackNotificationService>();
+
 
 builder.Services.AddHttpClient(); // Registra el servicio HttpClient en el contenedor de dependencias
 
@@ -56,15 +57,13 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(opt =>
     };
 });
 
+
+
+
 var app = builder.Build();
 
-// Ejemplo de uso de ISlackNotificationService
-using (var scope = app.Services.CreateScope())
-{
-    var slackService = scope.ServiceProvider.GetRequiredService<ISlackNotificationService>();
-    // Utiliza slackService para enviar notificaciones
-    // Por ejemplo: slackService.SendNotification("Mensaje de prueba");
-}
+
+
 
 app.UseHttpsRedirection();
 
@@ -75,7 +74,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Agregar el middleware de manejo de excepciones personalizado
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+//app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("politica");
 app.UseRouting();

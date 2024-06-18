@@ -7,31 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Slack
 {
-    [ApiController]
+[ApiController]
 [Route("api/[controller]")]
 public class SlackController : ControllerBase
 {
-    private readonly ISlackNotificationService _slackService;
+    private readonly ISlackService _slackService;
 
-    public SlackController(ISlackNotificationService slackService)
+    public SlackController(ISlackService slackService)
     {
         _slackService = slackService;
     }
 
-    [HttpPost("send")]
-    public async Task<IActionResult> SendSlackNotification()
+    [HttpPost]
+    public async Task<IActionResult> PostMessage([FromBody] string message)
     {
-        try
-        {
-            // Ejemplo de envío de notificación
-            await _slackService.SendNotificationAsync("Esta es una prueba de notificación a Slack desde ASP.NET Core");
-
-            return Ok("Notificación enviada exitosamente");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Error al enviar notificación: {ex.Message}");
-        }
+        await _slackService.SendMessageAsync(message);
+        return Ok(new { success = true });
     }
 }
 }
