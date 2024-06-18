@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Backend.Models;
 using Backend.Services.Admins;
+using Backend.Services.Slack;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Admins
@@ -12,14 +13,17 @@ namespace Backend.Controllers.Admins
     [Route("api/admins")]
     public class AdminsCreateController : ControllerBase
     {
-        public readonly IAdminsRepository _adminsRepository;
-        public AdminsCreateController (IAdminsRepository adminsRepository)
+        private readonly IAdminsRepository _adminsRepository;
+        private readonly ISlackService _slackService;
+
+        public AdminsCreateController(IAdminsRepository adminsRepository, ISlackService slackService)
         {
             _adminsRepository = adminsRepository;
+            _slackService = slackService;
         }
 
         [HttpPost]
-        public IActionResult CrearAdmin([FromBody] Admin admin)
+        public async Task<IActionResult> CrearAdmin([FromBody] Admin admin)
         {  
             var admins = _adminsRepository.ListarAdmin();
             var existe = admins.FirstOrDefault(x => x.Correo == admin.Correo);
@@ -32,11 +36,15 @@ namespace Backend.Controllers.Admins
             try
             {
                 _adminsRepository.CrearAdmin(admin);
-                return Ok("Se ha creado con exito");
+                return Ok("Se ha creado con éxito");
             }
-            catch (Exception Error)
+            catch (Exception ex)
             {
-                return BadRequest("Error al crear" + Error.Message);
+                
+                await _slackService.SendMessageAsync($"se ha generado un eror {ex}");
+
+                
+                return BadRequest("Error al crear: " + ex.Message);
             }
         }
     }
