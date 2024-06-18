@@ -40,6 +40,10 @@ namespace Backend.Services.Mailsender
                                 new {
                                     var = "Usuario",
                                     value =  $"{usuario}"
+                                },
+                                new {
+                                    var = "Cupon",
+                                    value =  $"{cupon}"
                                 }
                             }
                         }
