@@ -21,12 +21,7 @@ namespace Backend.Controllers.Redenciones
         public IEnumerable<Redencion> ListarRedenciones()
         {
             return _Redencion.ListarRedenciones();
-        }
-
-        
-
-
-        
+        }        
     }
 }
 

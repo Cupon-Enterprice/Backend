@@ -40,6 +40,10 @@ namespace Backend.Services.Mailsender
                                 new {
                                     var = "Usuario",
                                     value =  $"{usuario}"
+                                },
+                                new {
+                                    var = "Cupon",
+                                    value =  $"{cupon}"
                                 }
                             }
                         }
@@ -56,9 +60,6 @@ namespace Backend.Services.Mailsender
 
                 request.Headers.Add("Authorization", $"Bearer mlsn.181f31fe1c968dcfbf1b53ce865c8e4465368ec974a78a03ee0561d02b868912");
                 HttpResponseMessage response = _httpClient.Send(request);
-                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                Console.WriteLine(response);
-                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             }
             catch (HttpRequestException e)
             {

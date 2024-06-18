@@ -33,8 +33,6 @@ namespace Backend.Services.Redenciones
         {
             try
             {
-                
-
                 var usuario = await _context.Usuarios.FindAsync(redencionRequest.UsuarioId);
                 if (usuario == null)
                 {
@@ -71,6 +69,5 @@ namespace Backend.Services.Redenciones
                 return false;
             }
         }
-
     }
 }
