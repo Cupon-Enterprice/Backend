@@ -2,6 +2,7 @@ using Backend.Data;
 using Backend.Services.Admins;
 using Backend.Services.Cupones;
 using Backend.Services.Redenciones;
+using Backend.Services.Usuarios;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +28,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<ICuponesRepository, CuponesRepository>();
 builder.Services.AddScoped<IAdminsRepository, AdminsRepository>();
+builder.Services.AddScoped<IUsuariosRepository, UsuariosRepository>();
 builder.Services.AddScoped<ICuponesRedencionRepository, CuponesRedencionRepository>();
 builder.Services.AddScoped<CuponService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
