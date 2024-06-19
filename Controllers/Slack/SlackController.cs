@@ -41,6 +41,7 @@ public class SlackController : ControllerBase
 
             // Retornar la excepción al cliente
             return StatusCode(500, new { error = ex.Message });
+            
         }
     }
 }
