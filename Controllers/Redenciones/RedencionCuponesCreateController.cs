@@ -8,24 +8,46 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Redenciones
 {
-    [ApiController]
     public class RedencionCuponesCreateController : ControllerBase
     {
-        public readonly ICuponesRedencionRepository _Redencion;
-        public RedencionCuponesCreateController(ICuponesRedencionRepository Redenciones)
+        private readonly ICuponesRedencionRepository _redencionRepository;
+
+        public RedencionCuponesCreateController(ICuponesRedencionRepository redencionRepository)
         {
-            _Redencion = Redenciones;
+            _redencionRepository = redencionRepository;
         }
 
         [HttpPost("api/validarCupon")]
-        public async Task<IActionResult> ValidarCupon( ReedemRequest redencion)
+        public async Task<IActionResult> ValidarCupon([FromBody] ReedemRequest redencionRequest)
         {
-            Console.WriteLine('V');
-            var response = await _Redencion.ValidarCupon(redencion);
-            if(!response){
-                return BadRequest();
+            if (string.IsNullOrEmpty(redencionRequest.CodigoCupon))
+            {
+                return BadRequest(new { message = "El código del cupón no puede estar vacío" });
             }
-            return Ok();
+
+            
+            var cupon = await _redencionRepository.GetCuponByCodigo(redencionRequest.CodigoCupon);
+            if (cupon == null)
+            {
+                return BadRequest(new { message = "El cupón no existe" });
+            }
+
+            
+            var redencion = new Redencion
+            {
+                UsuarioId = redencionRequest.UsuarioId,
+                CuponId = cupon.Id,
+                FechaRendencion = DateTime.Now
+            };
+
+            var response = await _redencionRepository.ValidarCupon(redencionRequest, redencion);
+
+            if (!response)
+            {
+                return BadRequest(new { message = "La validación del cupón falló" });
+            }
+
+            return Ok(new { message = "El cupón se ha validado con éxito" });
         }
     }
 }

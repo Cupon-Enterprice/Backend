@@ -20,7 +20,7 @@ namespace Backend.Services.Admins
         }
 
         public void CrearAdmin(Admin admin)
-        {
+        {   admin.Estado = "Activo";
             _context.Admins.Add(admin);
             _context.SaveChanges();
         }
@@ -33,13 +33,22 @@ namespace Backend.Services.Admins
         public void EliminarAdmin(int Id)
         {
             var eliminar = _context.Admins.Find(Id);
-            _context.Admins.Remove(eliminar);
+            eliminar.Estado = "Inactivo";
+            _context.Admins.Update(eliminar);
             _context.SaveChanges();
         }
 
         public IEnumerable<Admin> ListarAdmin()
         {
             return _context.Admins.ToList();
+        }
+
+        public void ActivarAdmin(int Id){
+            var activar = _context.Admins.Find(Id);
+            activar.Estado = "Activo";
+            _context.Update(activar);
+            _context.SaveChanges();
+            
         }
     }
 }
