@@ -25,7 +25,7 @@ namespace Backend.Controllers.Admins
         [HttpPost]
         public async Task<IActionResult> CrearAdmin([FromBody] Admin admin)
         {  
-            var admins = _adminsRepository.ListarAdmin();
+            var admins = _adminsRepository.ObtenerAdmins();
             var existe = admins.FirstOrDefault(x => x.Correo == admin.Correo);
 
             if (existe != null)

@@ -1,11 +1,15 @@
 using Backend.Data;
 using Backend.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services.Admins
 {
     public class AdminsRepository : IAdminsRepository
     {
         public readonly DataContext _context;
+
+        private readonly int records = 5;
 
         public AdminsRepository(DataContext context)
         {
@@ -38,7 +42,17 @@ namespace Backend.Services.Admins
             _context.SaveChanges();
         }
 
-        public IEnumerable<Admin> ListarAdmin()
+        public object ListarAdmins([FromQuery] int? page)
+        {
+            int _page = page ?? 1;
+            decimal totalrecords = _context.Admins.Count();
+            int totalpages = Convert.ToInt32(Math.Ceiling(totalrecords/records));
+
+            var admins = _context.Admins.Skip((_page - 1) * records).Take(records).ToList();
+            var data = new {pages = totalpages, currentpage = _page, data = admins};
+            return data;
+        }
+        public IEnumerable<Admin> ObtenerAdmins()
         {
             return _context.Admins.ToList();
         }

@@ -19,9 +19,9 @@ namespace Backend.Controllers.Admins
 
         [HttpGet]
         [Route("api/admins")]
-        public IEnumerable<Admin> ListarAdmins()
+        public object ListarAdmin([FromQuery] int? page)
         {
-            return _adminRepository.ListarAdmin();
+            return _adminRepository.ListarAdmins(page);
         }
 
         [HttpGet]
