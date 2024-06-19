@@ -60,14 +60,6 @@ namespace Backend.Services.Mailsender
 
                 request.Headers.Add("Authorization", $"Bearer mlsn.181f31fe1c968dcfbf1b53ce865c8e4465368ec974a78a03ee0561d02b868912");
                 HttpResponseMessage response = _httpClient.Send(request);
-                Console.WriteLine(response.IsSuccessStatusCode);
-                Console.WriteLine(response.StatusCode);
-                Console.WriteLine(para);
-                Console.WriteLine(usuario);
-                Console.WriteLine(cupon);
-                Console.WriteLine("----------------------------------------------------------------");
-                Console.WriteLine(response.RequestMessage.ToString());
-                Console.WriteLine("----------------------------------------------------------------");
             }
             catch (HttpRequestException e)
             {
