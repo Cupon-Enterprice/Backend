@@ -17,9 +17,9 @@ namespace Backend.Models
         [Required]
         public string Descripcion { get; set; }
         [Required]
-        public DateTime FechaCreacion { get; set; }
+        public DateTime FechaCreacion { get; set; }  = DateTime.Now;
         [Required]
-        public DateTime FechaActualizacion { get; set; }
+        public DateTime FechaActualizacion { get; set; } = DateTime.Now;
         [Required]
         public DateTime FechaInicio { get; set; }
         [Required]
