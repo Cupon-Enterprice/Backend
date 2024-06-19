@@ -7,30 +7,40 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Slack
 {
-    [ApiController]
+[ApiController]
 [Route("api/[controller]")]
 public class SlackController : ControllerBase
 {
-    private readonly ISlackNotificationService _slackService;
+    private readonly ISlackService _slackService;
 
-    public SlackController(ISlackNotificationService slackService)
+    public SlackController(ISlackService slackService)
     {
         _slackService = slackService;
     }
 
-    [HttpPost("send")]
-    public async Task<IActionResult> SendSlackNotification()
+    [HttpPost]
+    public async Task<IActionResult> PostMessage([FromBody] string message)
+    {
+        await _slackService.SendMessageAsync(message);
+        return Ok(new { success = true });
+    }
+
+    [HttpGet]
+    [Route("generate-exception")]
+    public async Task<IActionResult> GenerateException()
     {
         try
         {
-            // Ejemplo de envío de notificación
-            await _slackService.SendNotificationAsync("Esta es una prueba de notificación a Slack desde ASP.NET Core");
-
-            return Ok("Notificación enviada exitosamente");
+            // Generar una excepción de prueba
+            throw new InvalidOperationException("This is a test exception.");
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Error al enviar notificación: {ex.Message}");
+            // Enviar detalles de la excepción a Slack
+            await _slackService.SendMessageAsync($"se ha generado una excepcion {ex}");
+
+            // Retornar la excepción al cliente
+            return StatusCode(500, new { error = ex.Message });
         }
     }
 }

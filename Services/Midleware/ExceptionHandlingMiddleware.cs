@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Backend.Services.Midleware
 {
-   
+
 public class ExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ISlackNotificationService _slackService;
+    private readonly ISlackService _slackService;
 
-    public ExceptionHandlingMiddleware(RequestDelegate next, ISlackNotificationService slackService)
+    public ExceptionHandlingMiddleware(RequestDelegate next, ISlackService slackService)
     {
         _next = next;
         _slackService = slackService;
@@ -30,10 +30,10 @@ public class ExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
-            // Envía notificación de Slack con el detalle del error
-            await _slackService.SendNotificationAsync($"Ocurrió un error: {ex.Message}");
+            
+            await _slackService.SendMessageAsync($"Ocurrió un error: {ex.Message}");
 
-            // Maneja el error de manera adecuada, por ejemplo, devolviendo una respuesta HTTP específica
+            
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             await context.Response.WriteAsync("Ocurrió un error en la aplicación. Por favor, inténtelo de nuevo más tarde.");
         }
