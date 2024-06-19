@@ -18,9 +18,9 @@ namespace Backend.Controllers.Cupones
 
         [HttpGet]
         [Route("api/cupones")]
-        public IEnumerable<Cupon> ListarCupones()
+        public object ListarCupones([FromQuery] int? page)
         {
-            return _cuponRepository.ListarCupones();
+            return _cuponRepository.ListarCupones(page);
         }
 
         [HttpGet]

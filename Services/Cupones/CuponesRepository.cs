@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Backend.Data;
 using Backend.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services.Cupones
@@ -12,6 +14,7 @@ namespace Backend.Services.Cupones
     public class CuponesRepository : ICuponesRepository
     {
         public readonly DataContext _context;
+        private readonly int records = 5;
         public CuponesRepository(DataContext context)
         {
             _context = context;
@@ -63,9 +66,16 @@ namespace Backend.Services.Cupones
             _context.SaveChanges();
         }
 
-        public IEnumerable<Cupon> ListarCupones()
+        public object ListarCupones([FromQuery] int? page)
         {
-            return _context.Cupones.Include(u => u.Admin).Include(u => u.TipoCupon).ToList();
+            int _page = page ?? 1;
+            decimal totalrecords  = _context.Cupones.Count();
+            int totalpages =  Convert.ToInt32(Math.Ceiling(totalrecords/records));
+
+            var cupons = _context.Cupones.Include(u => u.Admin).Include(u => u.TipoCupon).Skip((_page - 1) * records).Take(records).ToList();
+            var data = new {pages = totalpages, currentpage = _page, data = cupons};
+
+            return data;
         }
 
         public void ActivarCupon(int Id){
