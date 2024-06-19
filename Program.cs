@@ -11,7 +11,7 @@ using Backend.Services.Mailsender;
 using Backend.Services.Slack;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
-//using Backend.Services.Midleware;
+using Backend.Services.Midleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +35,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMailSenderServices, MailSenderServices>();
 builder.Services.AddSingleton<ISlackService, SlackService>();
 
-// Registrar ISlackNotificationService como Transient
+
 
 
 builder.Services.AddHttpClient(); // Registra el servicio HttpClient en el contenedor de dependencias
@@ -76,7 +76,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Agregar el middleware de manejo de excepciones personalizado
-//app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("politica");
 app.UseRouting();
