@@ -19,9 +19,9 @@ namespace Backend.Controllers.Usuarios
 
         [HttpGet]
         [Route("api/usuarios")]
-        public IEnumerable<Usuario> ListarUsuario()
+        public object ListarUsuarios([FromQuery] int? page)
         {
-            return _usuariosRepository.ListarUsuario();
+            return _usuariosRepository.ListarUsuarios(page);
         }
 
         [HttpGet]
