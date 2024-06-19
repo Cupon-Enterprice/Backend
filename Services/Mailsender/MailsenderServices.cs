@@ -24,7 +24,7 @@ namespace Backend.Services.Mailsender
                 {
                     from = new
                     {
-                        email = "MS_A1Y4a7@trial-neqvygme3y540p7w.mlsender.net"
+                        email = "MS_GAkw8I@trial-k68zxl21xnm4j905.mlsender.net"
                     },
                     to = new[]
                     {
@@ -48,7 +48,7 @@ namespace Backend.Services.Mailsender
                             }
                         }
                     },
-                    template_id = "3z0vklo02dvl7qrx"
+                    template_id = "neqvygmovjwl0p7w"
                 };
 
                 var body = System.Text.Json.JsonSerializer.Serialize(requestBody);
@@ -58,7 +58,7 @@ namespace Backend.Services.Mailsender
                     Content = new StringContent(body, Encoding.UTF8, "application/json")
                 };
 
-                request.Headers.Add("Authorization", $"Bearer mlsn.181f31fe1c968dcfbf1b53ce865c8e4465368ec974a78a03ee0561d02b868912");
+                request.Headers.Add("Authorization", $"Bearer mlsn.884063689a77b5c48b65054df305ba5d493292f52d70951ba214570bcc273e1a");
                 HttpResponseMessage response = _httpClient.Send(request);
             }
             catch (HttpRequestException e)
