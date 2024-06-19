@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Backend.Models;
 using Backend.Services.Usuarios;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Backend.Controllers.Usuarios
 {
@@ -21,7 +22,7 @@ namespace Backend.Controllers.Usuarios
         [HttpPost]
         public IActionResult CrearUsuario([FromBody] Usuario usuario)
         {  
-            var usuarios = _usuariosRepository.ListarUsuario();
+            var usuarios = _usuariosRepository.obtenerusuarios();
             var existe = usuarios.FirstOrDefault(x => x.Correo == usuario.Correo);
 
             if (existe != null)

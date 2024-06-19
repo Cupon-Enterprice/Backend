@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Backend.Data;
 using Backend.Models;
 using Backend.Services.Mailsender;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services.Redenciones
@@ -12,6 +13,7 @@ namespace Backend.Services.Redenciones
     public class CuponesRedencionRepository : ICuponesRedencionRepository
     {
         private readonly IMailSenderServices _mailSenderServices;
+        private readonly int records = 5;
         public readonly DataContext _context;
         public CuponesRedencionRepository(DataContext context, IMailSenderServices mailSenderServices)
         {
@@ -24,9 +26,16 @@ namespace Backend.Services.Redenciones
             return await _context.Cupones.FirstOrDefaultAsync(c => c.CodigoCupon == codigoCupon);
         }
 
-        public IEnumerable<Redencion> ListarRedenciones()
+        public object ListarRedenciones([FromQuery] int? page)
         {
-            return _context.Redenciones.Include(e => e.Cupon).Include(u => u.Usuario).ToList();
+            int _page = page ?? 1;
+            decimal totalrecords  = _context.Redenciones.Count();
+            int totalpages =  Convert.ToInt32(Math.Ceiling(totalrecords/records));
+
+            var redencion = _context.Redenciones.Include(u => u.Cupon).Include(u => u.Usuario).Skip((_page - 1) * records).Take(records).ToList();
+            var data = new {pages = totalpages, currentpage = _page, data = redencion};
+
+            return data;
         }
 
         public async Task<bool> ValidarCupon(ReedemRequest redencionRequest, Redencion redencion)

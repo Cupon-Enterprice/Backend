@@ -18,10 +18,11 @@ namespace Backend.Controllers.Redenciones
 
         [HttpGet]
         [Route("api/redencion")]
-        public IEnumerable<Redencion> ListarRedenciones()
+        public object ListarRedenciones([FromQuery] int? page)
         {
-            return _Redencion.ListarRedenciones();
-        }        
+            return _Redencion.ListarRedenciones(page);
+        }
+        
     }
 }
 
