@@ -29,7 +29,7 @@ namespace Backend.Services.Cupones
             cuponExistente.Nombre = cupon.Nombre;
             cuponExistente.Descripcion = cupon.Descripcion;
             cuponExistente.FechaCreacion = cupon.FechaCreacion;
-            cuponExistente.FechaActualizacion = cupon.FechaActualizacion;
+            cuponExistente.FechaActualizacion = cupon.FechaActualizacion = DateTime.Now;
             cuponExistente.FechaInicio = cupon.FechaInicio;
             cuponExistente.FechaFinalizacion = cupon.FechaFinalizacion;
             cuponExistente.ValorDescuento = cupon.ValorDescuento;
